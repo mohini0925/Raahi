@@ -1,0 +1,384 @@
+
+#wrapper{
+width: 100%;
+overflow: hidden;
+position: relative;
+padding: 0;
+}
+
+*{
+	box-sizing: border-box;
+}
+
+.loader-container {
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+}
+
+.hidden{
+	display: none;
+}
+
+#loader {
+    display: block;
+    position: absolute;
+    font-size: 0;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translateY(-50%) translateX(-50%);
+  }
+
+#loader img {
+    display: block;
+    width: 100%;
+    vertical-align: middle;
+}
+
+#myCarousel .carousel-item{
+    text-align: center;
+    max-height: 550px; /* Prevent carousel from being distorted if for some reason image doesn't load */
+}
+
+.main-nav button{
+  position:absolute;
+  right: 0px;
+  top: 13px;
+  border:none;
+  height:40px;
+  outline:none;
+  text-align:center;
+}
+
+.navbar{
+ padding: 5px!important;
+ min-height: 40px;
+ box-shadow: 0px 1px 20px #ccc;
+ border-radius: 0px!important; 
+ position: relative;
+}
+
+.main-nav a{
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  margin-right: 20px;
+}
+
+.main-nav a:hover{
+  color: #e75d57;
+  font-size: 16px;
+  font-weight: 600;
+}
+.navbar-brand {
+    float: left;
+    height: auto!important;
+    padding-top:0px;
+}
+
+.navbar-toggler:focus{
+  border: none;
+  outline: none;
+  align-items: center;
+  
+}
+#navbarCollapse{
+	background-color: #343a40;
+	padding:0px 10px;
+  min-height: 40px;
+}
+
+.dropdown-menu{
+	right: 0!important;
+	left: -100px;
+}
+.dropdown-menu a{
+  color: #000;
+}
+
+.dropdown-menu a:active{
+  background:#e75d57;
+  color: #fff;
+}
+
+.image-screen img{
+	margin: auto;    
+    display: block;
+}
+
+.fit-image{
+width: 100%;
+object-fit: cover;
+height: 450px;
+background-color: white;/* only if you want fixed height */
+}
+
+
+
+.fa-bars, .fa-bars{
+	color: #fff;
+}
+
+.service-title{
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.service-title span{
+  font-size: 22px;
+  font-weight: 400;
+  color: #525252;
+}
+
+h3.service-text{
+  font-size: 35px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.buy-btn{
+    background:  #e75d57;
+    color: #ffffff;
+    border: none;
+    padding: 8px 28px;
+    margin-top: 20px;
+    margin: 20px 0 0 10px;
+    border-radius:8px; 
+}
+
+/*Table*/
+
+.form-control-new{
+  width: 400px;
+  height: 48px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #434343;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  padding: 6px 12px; 
+}
+
+.radio{
+  text-align: center;
+}
+
+thead{
+  background-color: #404040;
+}
+th{
+  color: #fff;
+}
+
+th,td{
+  text-align: center;
+}
+
+.w-40{
+  width: 40%!important;
+}
+
+.w-10{
+  width: 10%!important;
+}
+
+/*Review*/
+.media{
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.media-body h6{
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  color: red;
+  letter-spacing: 0.86px;
+  font-weight: 700;
+
+}
+
+.media-body p{
+  text-align: justify;
+}
+
+.media .media-left {
+    padding-right: 22px;
+}
+.blog-post-time{
+  color: rgba(0,0,0,0.54);
+  font-size: 15px;
+  font-weight: 400
+}
+
+#more {display: none;}
+
+
+.comment-form-comment label {
+    display: block;
+    margin-bottom: 1px;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.comment-form-comment .comment-notes {
+    width: 700px;
+    padding: 10px;
+    border: 1px solid #cfcfcf;
+    height: 140px;
+}
+
+.comment-notes:focus{
+  outline: none;
+}
+
+.comment-form-author input:focus, .comment-form-email input:focus{
+  outline: none;
+}
+
+.comment-form-comment{
+    margin: 0 10px 20px 10px;
+
+}
+
+.comment-input {
+    overflow: hidden;
+}
+.comment-form-author, .comment-form-email, .comment-form-url {
+    float: left;
+    padding: 0 10px;
+
+}
+.comment-input .comment-form-author, .comment-input .comment-form-email {
+    width: 50%;
+}
+
+.comment-input label {
+    display: block;
+    margin-bottom: 1px;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.comment-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfcfcf;
+    height: 40px;
+}
+
+.comment-form-submit .comment-submit {
+    background:  #e75d57;
+    color: #ffffff;
+    border: none;
+    padding: 8px 28px;
+    margin-top: 20px;
+    margin: 20px 0 0 10px;
+    border-radius:8px; 
+}
+
+/*
+Product main*/
+
+
+.product-main-display{
+  margin-top: 20px;
+}
+
+.product-main-display:after {
+    clear: both;
+}
+.product-main-display:before, .product-main-display:after {
+    content: " ";
+    display: table;
+}
+
+
+
+.buy-btn{
+  color: white;
+  background-color:  #e75d57;
+}
+
+.buy-btn:hover{
+  color: #fff;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+
+
+@media screen and  (min-width: 768px){
+  .product-main-display{
+    width: 750px;}
+}
+
+@media screen and (min-width: 992px){
+  .product-main-display{
+    width: 970px;}
+}
+
+
+@media screen and (min-width: 1200px){
+  .product-main-display{
+    width: 1230px;}
+}
+
+@media only screen and (max-width: 767px){
+  .comment-form-comment .comment-notes {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #cfcfcf;
+    height: 140px;
+}
+
+.fit-image{
+width: 100%;
+object-fit: cover;
+height: 350px;
+background-color: white;/* only if you want fixed height */
+}
+
+
+}
+
+@media only screen and (max-width: 500px){
+ .service-title{
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.service-box{
+  padding: 0 10px;
+}
+
+.service-title span{
+  font-size: 16px;
+  font-weight: 400;
+  color: #525252;
+}
+
+h3.service-text{
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+
+.fit-image{
+width: 100%;
+object-fit: cover;
+height: 250px;
+background-color: white;/* only if you want fixed height */
+}
+}
