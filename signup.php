@@ -44,8 +44,8 @@ $er=0;
       $error['userType'] = 'Type of User has to be Chosen';
       $er = 1;
     }
-    $e1 = "SELECT * FROM passenger WHERE email='$email'";
-    $e2 = "SELECT * FROM serviceCenter WHERE email='$email'";
+    $e1 = "SELECT * FROM user WHERE email='$email'";
+    $e2 = "SELECT * FROM service WHERE email='$email'";
     $result_email1 = $conn-> query($e1);
     $result_email2 = $conn-> query($e2);
     if (($result_email1-> num_rows > 0) || ($result_email2-> num_rows > 0)){
@@ -54,21 +54,21 @@ $er=0;
     }
     if($er==0){
       $pass = str_rot13($pass);
-      if($userType=="passenger"){
-        $sql = "INSERT INTO passenger (name, email, mobile, pass) VALUES ('$name', '$email', '$mobile', '$pass')";
+      if($userType=="Traveller"){
+        $sql = "INSERT INTO user (name, email, contact, pass) VALUES ('$name', '$email', '$mobile', '$pass')";
         if($conn->query($sql)==TRUE){
           $_SESSION['email'] = $email;
-          header('Location: passenger.php');
+          header('Location: home.php');
         }
         else{
-          echo "<h2 style='text-align: center; color: red;'>Could Not Add Passenger. Please Try Again</h2>";
+          echo "<h2 style='text-align: center; color: red;'>Could Not Add Traveller. Please Try Again</h2>";
         }
       }
       else{
-        $sql = "INSERT INTO serviceCenter (name, email, mobile, pass) VALUES ('$name', '$email', '$mobile', '$pass')";
+        $sql = "INSERT INTO service (name, email, contact, pass) VALUES ('$name', '$email', '$mobile', '$pass')";
         if($conn->query($sql)==TRUE){
           $_SESSION['email'] = $email;
-          header('Location: address.php');
+          header('Location: details.php');
         }
         else{
           echo "<h2 style='text-align: center; color: red;'>Could Not Add Service Center. Please Try Again</h2>";
@@ -319,7 +319,7 @@ $er=0;
               </div>  
 
                <div class="form-group">
-                 <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Your Mobile Number">
+                 <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Your Contact Number">
                  <span class="error"><?php echo $error['mobile']; ?></span>
               </div>
 
@@ -330,15 +330,13 @@ $er=0;
 
                 <div class="input-group">
                     <div class="form-check col-6">
-                    <input class="form-check-input" type="radio" name="userType" id="flexRadioDefault1" value="passenger">
+                    <input class="form-check-input" type="radio" name="userType" id="flexRadioDefault1" value="Traveller">
                     <label for="remember" class="form-check-label radioname"
-                    >Raahi</label>
+                    >Traveller</label>
                   </div>
                    <div class="form-check col-6">
-                    <input class="form-check-input" type="radio" name="userType" id="flexRadioDefault1" value="serviceCenter">
-                    <label for="remember" class="form-check-label radioname" 
-
-                    >Service Provider</label>
+                    <input class="form-check-input" type="radio" name="userType" id="flexRadioDefault1" value="Service">
+                    <label for="remember" class="form-check-label radioname">Service Provider</label>
                   </div>
                   <span class="error"><?php echo $error['userType']; ?></span>
                 </div>
