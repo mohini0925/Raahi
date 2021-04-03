@@ -1,3 +1,56 @@
+<?php 
+
+require('config.php');
+if(!isset($_SESSION['email'])){
+  header('Location: login.php');
+  exit;
+}
+
+$email = $_SESSION['email'];
+if(isset($_POST['getlatlong'])){
+  if(isset($_POST['latitude']) && isset($_POST['longitude'])){
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+
+    $searchQuery = $latitude.','.$longitude;
+
+    $buildQuery = http_build_query([
+      'access_key' => 'f3cf897892df57307c368f33bcb17d82',
+      'query' => $searchQuery
+    ]);
+    $ch = curl_init(sprintf('%s?%s', 'http://api.positionstack.com/v1/reverse', $buildQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $result = json_decode($response, true);
+
+    $address = $result["data"]["0"]["label"];
+
+      $sql = "SELECT * FROM user WHERE email='$email'";
+      $result = $conn->query($sql);
+      if($result->num_rows == 1){
+        $sql1 = "UPDATE user SET latitude='$latitude', longitude='$longitude', address='$address' WHERE email='$email'";
+        if($conn->query($sql1)){
+          
+        }
+        else{
+          echo "Could Not Update Location. Please Refresh the Page.";
+        }
+      }
+      else{
+        echo "Invalid User. Please Logout and Login with a User Account";
+      }
+  }
+  else{
+    echo "Could Not Update Location. Please Refresh the Page.";
+  }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +121,7 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="#">My Profile</a>
                 <a class="dropdown-item" href="#">Booking</a>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="login.php">Logout</a>
               </div>
             </div>      
             </div>
@@ -235,7 +288,11 @@
   </div>
 </div>
 
-
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post" id="latLongForm">
+          <input type="number" name="latitude" id="latitude" value="" hidden step="0.0000001">
+          <input type="number" name="longitude" id="longitude" value="" hidden step="0.0000001">
+          <button type="submit" name="getlatlong" id="getlatlong" value="getlatlong"></button>
+        </form>
 
 </div>
 
@@ -268,6 +325,40 @@
 
    </script>
 
+
+<script>
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(showPosition);
+      
+
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function showPosition(position) {
+    document.getElementById('latitude').value = position.coords.latitude;
+    document.getElementById('longitude').value = position.coords.longitude;
+    document.getElementById('getlatlong').click();
+  }
+
+</script>
+<?php 
+
+  if($_SESSION['loc'] == 0){
+    $_SESSION['loc'] = 1;
+      echo "<script>
+        var temp = confirm('Do You Allow your Location to be Recorded?');
+        if(temp == true){
+          getLocation();
+        }
+        else{
+          alert('LOCATION NOT RECORDED');
+        }
+      </script>";
+  }
+      ?>
 </body>
 </html>
 

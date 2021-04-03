@@ -58,6 +58,7 @@ $er=0;
         $sql = "INSERT INTO user (name, email, contact, pass) VALUES ('$name', '$email', '$mobile', '$pass')";
         if($conn->query($sql)==TRUE){
           $_SESSION['email'] = $email;
+          $_SESSION['loc'] = 0;
           header('Location: home.php');
         }
         else{

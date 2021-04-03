@@ -26,6 +26,7 @@ $er=0;
         while($row = $result_email1->fetch_assoc()) {
           if($pass == $row['pass']){
             $_SESSION['email'] = $email;
+            $_SESSION['loc'] = 0;
             header('Location: home.php');
           }
           else{
