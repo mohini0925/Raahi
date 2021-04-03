@@ -156,6 +156,23 @@ if(isset($_POST['addDetails'])){
     padding: 6px 12px; 
   }
 
+  .form-control-new{
+  width: 160px;
+  height: 48px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #434343;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  padding: 6px 12px; 
+}
+
+.end-time{
+  margin-left: 40px;
+}
+
+
   .form-group{
     margin-top: 2rem;
   }
@@ -179,7 +196,7 @@ if(isset($_POST['addDetails'])){
   }
 
   .logo{
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
 
   #btn{
@@ -284,6 +301,22 @@ if(isset($_POST['addDetails'])){
     color: #737999;
   }
 
+  .form-control-new{
+  width: 90px;
+  height: 35px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #434343;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  padding: 6px 12px; 
+}
+
+.end-time{
+  margin-left: 45px;
+}
+
   .custom-file-label {
       position: absolute;
       right: 0;
@@ -372,6 +405,22 @@ if(isset($_POST['addDetails'])){
               <input type="file"  name="serviceImage" id="customFile" required>
               <label class="custom-file-label" for="customFile">Choose file</label>
              </div>
+
+            <div class="form-group ">
+              
+              <div class="row m-0">
+              <div class="col-6 p-0">
+                <label for="exampleFormControlTextarea1">Start Time</label>
+                <input class="form-control-new" type="time" value="13:45:00" id="example-time-input">
+              </div>
+              <div class="col-6 p-0">
+                <label for="exampleFormControlTextarea1" class="end-time">End Time</label><br>
+                <input class="form-control-new float-right"  type="time" value="13:45:00" id="example-time-input">
+              </div>
+              </div>
+            </div>
+
+
               <br>
               <div class=" form-group d-flex justify-content-center" id="btn">
                <button type="submit" name="addDetails" class="btn btn-block">Add Details</button>
