@@ -90,7 +90,7 @@ if(isset($_POST['addDetails'])){
         exit;
       }
       else{
-        $err = "Deatils Could Not be Added";
+        $err = "Details Could Not be Added";
       }
     }
     else{
@@ -451,11 +451,10 @@ if(isset($_POST['addDetails'])){
           AOS.init();
 
 
-          $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-          });
-
+      $(".custom-file-input").on("change", function() {
+     var fileName = $(this).val().split("\\").pop();
+     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+     });
 
         </script>
 

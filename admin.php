@@ -22,6 +22,10 @@ if($result->num_rows==1){
         $address = $row['address'];
     }
 }
+if($address==NULL){
+    header('Location: details.php');
+    exit;
+}
 
 if(isset($_POST['addRoom'])){
     $roomName = $_POST['roomName'];
@@ -223,19 +227,30 @@ if(isset($_POST['reject'])){
         }
 
         .order-box{
-          width: 95%;
+          width: 97%;
           padding: 18px;
           border-radius: 8px ; 
           margin: 0px 15px;
           border: 1px solid #ccc;
+          box-shadow: 0px 0px 48px -36px rgba(140,140,140,0.86);
         }
 
         h5.card-title{
-          font-size: 18px;
-          font-weight: bold;
+          font-size: 17px;
+          font-weight: 600;
           margin: 14px 0px;
-          color: #444;
+          color: #212121;
         }
+
+        h5.card-title span{
+          font-size: 20px;
+          font-weight: 400;
+          color: #404040;
+          padding-left: 5px; 
+          margin: 0 3px;
+        }
+
+
 
         .arrival-form{
             margin: 0;
@@ -249,9 +264,7 @@ if(isset($_POST['reject'])){
           font-size: 15px;
         }
         
-        h5.card-title span{
-          margin: 0 3px;
-        }
+        
         .status-btn {
             justify-content: space-between;
             display: flex;
