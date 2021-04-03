@@ -18,15 +18,15 @@ $er=0;
 
     if($er==0){
       $pass = str_rot13($pass);
-      $e1 = "SELECT * FROM passenger WHERE email='$email'";
+      $e1 = "SELECT * FROM user WHERE email='$email'";
       $result_email1 = $conn-> query($e1);
-      $e2 = "SELECT * FROM serviceCenter WHERE email='$email'";
+      $e2 = "SELECT * FROM service WHERE email='$email'";
       $result_email2 = $conn-> query($e2);
       if ($result_email1->num_rows == 1){
         while($row = $result_email1->fetch_assoc()) {
           if($pass == $row['pass']){
             $_SESSION['email'] = $email;
-            header('Location: passenger.php');
+            header('Location: home.php');
           }
           else{
             $error['pass'] = "Incorrect Password";
@@ -37,13 +37,16 @@ $er=0;
         while($row = $result_email2->fetch_assoc()) {
           if($pass == $row['pass']){
             $_SESSION['email'] = $email;
-            $check = "SELECT * FROM position WHERE email='$email'";
+            $check = "SELECT * FROM service WHERE email='$email'";
             $result = $conn->query($check);
             if($result->num_rows>0){
-              header('Location: serviceCenter.php');
+              while($row = $result->fetch_assoc()){
+                if($row['address']!='NULL')
+                header('Location: admin.php');
+              }
             }
             else{
-              header('Location: address.php');
+              header('Location: details.php');
             }
           }
           else{
