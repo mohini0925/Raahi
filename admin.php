@@ -8,95 +8,99 @@ $sErr = "";
 $pErr = "";
 $hErr = "";
 $email = $_SESSION['email'];
-$sql = "SELECT * FROM serviceCenter WHERE email = '$email'";
+$sql = "SELECT * FROM service WHERE email = '$email'";
 $result = $conn->query($sql);
 if($result->num_rows==1){
     while($row = $result->fetch_assoc()){
         $name = $row['name'];
-        $mobile = $row['mobile'];
+        $mobile = $row['contact'];
         $id = $row['id'];
+        $image = $row['image'];
+        $time = $row['time'];
+        $type = $row['type'];
+        $description = $row['description'];
+        $address = $row['address'];
     }
 }
 
-if(isset($_POST['addService'])){
-    $serviceName = $_POST['serviceName'];
-    $servicePrice = $_POST['servicePrice'];
-    $addService = "INSERT INTO services (serviceName, servicePrice, email) VALUES ('$serviceName', '$servicePrice', '$email')";
-    if($conn->query($addService) === TRUE){
+if(isset($_POST['addRoom'])){
+    $roomName = $_POST['roomName'];
+    $roomPrice = $_POST['roomPrice'];
+    $addRoom = "INSERT INTO rooms (roomName, roomPrice, email) VALUES ('$roomName', '$roomPrice', '$email')";
+    if($conn->query($addRoom) === TRUE){
 
     }
     else{
-        $sErr = "Service Could not be Added!";
+        $sErr = "Room Could not be Added!";
     }
 }
 
-if(isset($_POST['addProduct'])){
-$target_dir = "uploads/";
-    $target_file = $target_dir . basename($_FILES["productImage"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+// if(isset($_POST['addProduct'])){
+//  $target_dir = "uploads/";
+//     $target_file = $target_dir . basename($_FILES["productImage"]["name"]);
+//     $uploadOk = 1;
+//     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-    $check = getimagesize($_FILES["productImage"]["tmp_name"]);
-    if($check !== false) {
-      $uploadOk = 1;
-    } else {
-      $pErr = "Product Image is not an image.<br>";
-      $uploadOk = 0;
-    }
+//     $check = getimagesize($_FILES["productImage"]["tmp_name"]);
+//     if($check !== false) {
+//       $uploadOk = 1;
+//     } else {
+//       $pErr = "Product Image is not an image.<br>";
+//       $uploadOk = 0;
+//     }
 
-    if (file_exists($target_file)) {
-      $pErr = "Poster with the same name already exists.<br>";
-      $uploadOk = 0;
-    }
+//     if (file_exists($target_file)) {
+//       $pErr = "Poster with the same name already exists.<br>";
+//       $uploadOk = 0;
+//     }
 
-    if ($_FILES["productImage"]["size"] > 5242880) {
-      $pErr = "Product Image cannot be more than 5 MB.<br>";
-      $uploadOk = 0;
-    }
+//     if ($_FILES["productImage"]["size"] > 5242880) {
+//       $pErr = "Product Image cannot be more than 5 MB.<br>";
+//       $uploadOk = 0;
+//     }
 
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
-      $pErr = "Only JPG, JPEG, PNG files are allowed.<br>";
-      $uploadOk = 0;
-    }
+//     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
+//       $pErr = "Only JPG, JPEG, PNG files are allowed.<br>";
+//       $uploadOk = 0;
+//     }
 
-    if ($uploadOk == 0) {
-      $pErr = "Product Image was not Uploaded.<br>";
-    // if everything is ok, try to upload file
-    } else {
-      if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {
+//     if ($uploadOk == 0) {
+//       $pErr = "Product Image was not Uploaded.<br>";
+//     // if everything is ok, try to upload file
+//     } else {
+//       if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {
         
-      } else {
-        $pErr = "Product Image was not Uploaded.<br>";
-      }
-    }
+//       } else {
+//         $pErr = "Product Image was not Uploaded.<br>";
+//       }
+//     }
 
-    $imageadd = htmlspecialchars( basename( $_FILES["productImage"]["name"]));
+//     $imageadd = htmlspecialchars( basename( $_FILES["productImage"]["name"]));
 
-    // image code ends
-    if($uploadOk!=0){
-    $productName = $_POST['productName'];
-    $productDescription = $_POST['productDescription'];
-    $productVehicle = $_POST['productVehicle'];
-    $productPrice = $_POST['productPrice'];
-    $productImage = $imageadd;
+//     // image code ends
+//     if($uploadOk!=0){
+//     $productName = $_POST['productName'];
+//     $productDescription = $_POST['productDescription'];
+//     $productVehicle = $_POST['productVehicle'];
+//     $productPrice = $_POST['productPrice'];
+//     $productImage = $imageadd;
 
-    $sql = "INSERT INTO product (productName, productDescription, productVehicle, productPrice, productImage, email) VALUES ( '$productName', '$productDescription', '$productVehicle', '$productPrice', '$productImage', '$email')";
+//     $sql = "INSERT INTO product (productName, productDescription, productVehicle, productPrice, productImage, email) VALUES ( '$productName', '$productDescription', '$productVehicle', '$productPrice', '$productImage', '$email')";
 
-    if ($conn->query($sql) === TRUE) {
+//     if ($conn->query($sql) === TRUE) {
             
-    } else {
-      $pErr = "Error: " . $sql . "<br>" . $conn->error;
-    }
-  }
-  else{
-      $pErr = "Product was not Added";
-  }
-}
+//     } else {
+//       $pErr = "Error: " . $sql . "<br>" . $conn->error;
+//     }
+//   }
+//   else{
+//       $pErr = "Product was not Added";
+//   }
+// }
 
 if(isset($_POST['accept'])){
-  $arrtime = $_POST['arrtime'];
   $id = $_POST['id'];
-  $sql = "UPDATE transaction SET status='ACCEPTED', arrtime='$arrtime' WHERE id='$id'";
+  $sql = "UPDATE transactions SET status='ACCEPTED' WHERE id='$id'";
   if($conn->query($sql)===TRUE){
 
   }
@@ -106,9 +110,8 @@ if(isset($_POST['accept'])){
 }
 
 if(isset($_POST['reject'])){
-  $arrtime = $_POST['arrtime'];
   $id = $_POST['id'];
-  $sql = "UPDATE transaction SET status='REJECTED', arrtime='$arrtime' WHERE id='$id'";
+  $sql = "UPDATE transactions SET status='REJECTED' WHERE id='$id'";
   if($conn->query($sql)===TRUE){
 
   }
@@ -124,7 +127,7 @@ if(isset($_POST['reject'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Provider</title>
+    <title><?php echo $name; ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -207,16 +210,20 @@ if(isset($_POST['reject'])){
           background-color: #e75d570d;
           color: #e75d57;
         }
+        i{
+            cursor: pointer;
+        }
 
         /*Transaction*/
 
         #boxx{
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
+          padding: 3%;
         }
 
         .order-box{
-          width: 500px;
+          width: 95%;
           padding: 18px;
           border-radius: 8px ; 
           margin: 0px 15px;
@@ -523,7 +530,7 @@ if(isset($_POST['reject'])){
 </head>
 <body>
 <div class="topnav">
-  <a href="homepage.php"><img src="images/logo.png" id="logo"></a>
+  <a href="admin.php"><img src="images/logo.png" id="logo"></a>
    
      <div class="profile" ><?php  echo $_SESSION['email'] ?></div>
      <div class="profile" onclick="sidebar()"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -531,9 +538,10 @@ if(isset($_POST['reject'])){
 <div class="tab">
     <h2><?php echo $name; ?></h2>
   <button class="tablinks" onclick="openCity(event, 'home')" id="defaultOpen">Home</button>
-  <button class="tablinks" onclick="openCity(event, 'services')">Services</button>
-  <button class="tablinks" onclick="openCity(event, 'products')">Products</button>
-  <button class="tablinks" onclick="openCity(event, 'transactions')">Transactions</button>
+  <?php if($type=="Accomodation"){ ?>
+    <button class="tablinks" onclick="openCity(event, 'rooms')">Rooms</button>
+    <button class="tablinks" onclick="openCity(event, 'transactions')">Transactions</button>
+  <?php } ?>
   <button class="tablinks" onclick="openCity(event, 'reviews')">Reviews</button>
   <a href="login.php" style="all: unset; color: inherit;"><button class="tablinks" onclick="openTab(event, 'logout')">Logout</button></a><br><br><hr><br>
   <span class="error">
@@ -549,87 +557,99 @@ if(isset($_POST['reject'])){
 
 <div id="home" class="tabcontent">
 
-<div class="showAll">
-<h2>Statistics</h2>
-<div class="statistics">
-  <div class="cards">Products<br>
-  <b class="statText">
-  <?php
-  $sql1 = "SELECT * FROM product WHERE email='$email'";
-  $result = $conn->query($sql1); 
-  echo $result->num_rows; 
-  ?>
-  </b>
-  </div>
-  <div class="cards">Services<br>
-  <b class="statText">
-  <?php
-  $sql2 = "SELECT * FROM services WHERE email='$email'";
-  $result = $conn->query($sql2); 
-  echo $result->num_rows; 
-  ?>
-  </b>
-  </div>
-  <div class="cards">Transactions<br>
-  <b class="statText">
-  <?php
-  $sql3 = "SELECT * FROM transaction WHERE scemail='$email'";
-  $result = $conn->query($sql3); 
-  echo $result->num_rows; 
-  ?>
-  </b>
-  </div>
-  <div class="cards">Rating<br>
-  <b class="statText">
-  <?php
-    $sql3 = "SELECT AVG(rating) AS ratingAverage FROM review WHERE SCemail='$email'";
-    $result = $conn->query($sql3); 
-    if($result->num_rows>0){
-        while($row=$result->fetch_assoc()){
-            echo substr($row['ratingAverage'],0,3);
-        }
-    } 
-  ?>
-  </b>     
-  </div>
+    <!-- <div class="showAll">
+        <h2>Statistics</h2>
+        <div class="statistics">
+            <div class="cards">Products<br>
+            <b class="statText">
+            <?php
+            $sql1 = "SELECT * FROM product WHERE email='$email'";
+            $result = $conn->query($sql1); 
+            echo $result->num_rows; 
+            ?>
+            </b>
+            </div>
+            <div class="cards">Services<br>
+            <b class="statText">
+            <?php
+            $sql2 = "SELECT * FROM services WHERE email='$email'";
+            $result = $conn->query($sql2); 
+            echo $result->num_rows; 
+            ?>
+            </b>
+            </div>
+            <div class="cards">Transactions<br>
+            <b class="statText">
+            <?php
+            $sql3 = "SELECT * FROM transaction WHERE scemail='$email'";
+            $result = $conn->query($sql3); 
+            echo $result->num_rows; 
+            ?>
+            </b>
+            </div>
+            <div class="cards">Rating<br>
+            <b class="statText">
+            <?php
+                $sql3 = "SELECT AVG(rating) AS ratingAverage FROM review WHERE SCemail='$email'";
+                $result = $conn->query($sql3); 
+                if($result->num_rows>0){
+                    while($row=$result->fetch_assoc()){
+                        echo substr($row['ratingAverage'],0,3);
+                    }
+                } 
+            ?>
+            </b>     
+            </div>
+        </div>
+    </div> -->
+    <form action="editProfile.php" method="POST"  enctype="multipart/form-data">
+    <h2>Edit Profile</h2>
+
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Name" value="<?php echo $name; ?>"><br>
+        
+        <label for="mobile">Mobile Number</label>
+        <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" value="<?php echo $mobile; ?>"><br>
+
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description" placeholder="Description" value="<?php echo $description; ?>" ><br>
+        
+        <label for="time">Operation Hours</label>
+        <input type="text" name="time" id="time" placeholder="time" value="<?php echo $time; ?>" ><br>
+        
+        <label for="email">Email ID</label>
+        <input type="text" name="email" id="email" placeholder="Email ID" value="<?php echo $email; ?>" disabled><br>
+        
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address" placeholder="Address" value="<?php echo $address; ?>" disabled><br>
+        
+        <label for="type">Type</label>
+        <input type="text" name="type" id="type" placeholder="Type of Service" value="<?php echo $type; ?>" disabled><br>
+
+        <center>
+            <input type="submit" value="Edit Profile" name="edit" class="button"/>
+        </center>  
+    </form> 
+
 </div>
-</div>
-<form action="editProfile.php" method="POST"  enctype="multipart/form-data">
-  <h2>Edit Profile</h2>
 
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" placeholder="Name" value="<?php echo $name; ?>"><br>
-    
-    <label for="mobile">Mobile Number</label>
-    <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" value="<?php echo $mobile; ?>"><br>
-
-    <label for="email">Email ID</label>
-    <input type="text" name="email" id="email" placeholder="Email ID" value="<?php echo $email; ?>" disabled><br>
-
-    <center>
-        <input type="submit" value="Edit Profile" name="edit" class="button"/>
-    </center>  
-</form> 
-
-</div>
-
-<div id="services" class="tabcontent">
+<div id="rooms" class="tabcontent">
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST"  enctype="multipart/form-data">
-  <h2>Add a Service</h2>
+  <h2>Add a Room</h2>
 
-    <label for="serviceName">Service Name</label>
-    <input type="text" name="serviceName" id="serviceName" placeholder="Service Name" required><br>
+    <label for="roomName">Room Name</label>
+    <input type="text" name="roomName" id="roomName" placeholder="Room Name" required><br>
 
-    <label for="servicePrice">Service Price</label>
-    <input type="number" name="servicePrice" id="servicePrice" placeholder="Service Price" required><br>
+    <label for="roomPrice">Room Price</label>
+    <input type="number" name="roomPrice" id="roomPrice" placeholder="Room Price" required><br>
 
 <center>
-    <input type="submit" value="Add Service" name="addService" class="button" />
+    <input type="submit" value="Add Room" name="addRoom" class="button" />
 </center>  
 </form> 
 
 <div class="showAll">
-<h2>All Services</h2>
+<h2>All Rooms</h2>
 <table>
   <tr>
     <th>ID</th>
@@ -639,7 +659,7 @@ if(isset($_POST['reject'])){
   </tr>
   <?php
 
-$sql = "SELECT * FROM services WHERE email='$email'";
+$sql = "SELECT * FROM rooms WHERE email='$email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -648,8 +668,8 @@ if ($result->num_rows > 0) {
     ?>
 <tr>
     <td><?php echo $row['id']; ?></td>   
-    <td><?php echo $row['serviceName']; ?></td>   
-    <td><?php echo $row['servicePrice']; ?></td>   
+    <td><?php echo $row['roomName']; ?></td>   
+    <td><?php echo $row['roomPrice']; ?></td>   
     <td><button style="padding: 5px;" class="edBtn" onclick="document.getElementById('<?php echo 'ee'.$row['id']; ?>').style.display='block'">Edit</button> <button style="padding: 5px;" class="edBtn" onclick="document.getElementById('<?php echo 'de'.$row['id']; ?>').style.display='block'">Delete</button></td> 
 </tr>
 
@@ -659,17 +679,17 @@ if ($result->num_rows > 0) {
 
                           <span class="closeEdit" onclick="document.getElementById('<?php echo 'ee'.$row['id']; ?>').style.display='none'">&times;</span>
 
-                          <form action="editService.php?id=<?php echo $row['id']; ?>" method="POST" style="margin-bottom: 10px; margin-top: -30px; background:none;">
-                            <h3 class="heading">Edit Service</h3>
+                          <form action="editRoom.php?id=<?php echo $row['id']; ?>" method="POST" style="margin-bottom: 10px; margin-top: -30px; background:none;">
+                            <h3 class="heading">Edit Room</h3>
                             <center><hr>
 
-                              <label for="serviceNameEdit" class="modal-label">Service Name: </label>
-                              <input type="text" name="serviceNameEdit" id="serviceNameEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['serviceName']; ?>"><br><br>
+                              <label for="roomNameEdit" class="modal-label">Room Name: </label>
+                              <input type="text" name="roomNameEdit" id="roomNameEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['roomName']; ?>"><br><br>
                               
-                              <label for="servicePriceEdit" class="modal-label">Service Price: </label>
-                              <input type="number" name="servicePriceEdit" id="servicePriceEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['servicePrice']; ?>"><br><br>
+                              <label for="roomPriceEdit" class="modal-label">Room Price: </label>
+                              <input type="number" name="roomPriceEdit" id="roomPriceEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['roomPrice']; ?>"><br><br>
                               
-                              <input type="submit" value="Edit Service" name="editService" class="button">
+                              <input type="submit" value="Edit Room" name="editRoom" class="button">
                               
                             </center>
                             </form>
@@ -683,14 +703,14 @@ if ($result->num_rows > 0) {
 
                           <span class="closeDelete" onclick="document.getElementById('<?php echo 'de'.$row['id']; ?>').style.display='none'">&times;</span>
 
-                          <form action="deleteService.php?id=<?php echo $row['id']; ?>" method="POST" style="margin-bottom: 10px;margin-top: -30px; background:none;">
-                            <h3 class="heading">Delete Service</h3>
+                          <form action="deleteRoom.php?id=<?php echo $row['id']; ?>" method="POST" style="margin-bottom: 10px;margin-top: -30px; background:none;">
+                            <h3 class="heading">Delete Room</h3>
                             <center><hr>
-                              <label for="serviceNameDelete" class="modal-label">Service Name: </label>
-                              <input type="text" name="serviceNameDelete" id="serviceNameDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['serviceName']; ?>" disabled><br><br>
-                              <label for="servicePriceDelete" class="modal-label">Service Price: </label>
-                              <input type="number" name="servicePriceDelete" id="servicePriceDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['servicePrice']; ?>" disabled><br><br>
-                              <input type="submit" value="Delete Service" name="deleteService" class="button">
+                              <label for="roomNameDelete" class="modal-label">Room Name: </label>
+                              <input type="text" name="roomNameDelete" id="roomNameDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['roomName']; ?>" disabled><br><br>
+                              <label for="roomPriceDelete" class="modal-label">Room Price: </label>
+                              <input type="number" name="roomPriceDelete" id="roomPriceDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['roomPrice']; ?>" disabled><br><br>
+                              <input type="submit" value="Delete Room" name="deleteRoom" class="button">
                             </center>
                             </form>
 
@@ -699,7 +719,7 @@ if ($result->num_rows > 0) {
   
 <?php }
 } else {
-  echo "<tr><td colspan='4' style='text-align: center;'>No Services Have Been Added Yet</td></tr>";
+  echo "<tr><td colspan='4' style='text-align: center;'>No Rooms Have Been Added Yet</td></tr>";
 }
   ?>
 </table>
@@ -711,18 +731,19 @@ if ($result->num_rows > 0) {
   <br><br><h2 class="order-title">Transaction Details</h2><br>
   <div id="boxx">
   <?php 
-  $sql = "SELECT * FROM transaction WHERE scemail='$email' ORDER BY status DESC";
+  $sql = "SELECT * FROM transactions WHERE scemail='$email' ORDER BY status DESC";
   $result = $conn->query($sql);
-  if($result->num_rows>0){
+  if($result->num_rows > 0){
     while($row=$result->fetch_assoc()){
       $email2 = $row['pemail'];
-      $price = $row['price'];
-      $sql2 = "SELECT * FROM passenger WHERE email='$email2'";
+      $price = $row['roomPrice'];
+      $sql2 = "SELECT * FROM user WHERE email='$email2'";
       $result2 = $conn->query($sql2);
       if($result2->num_rows>0){
         while($row2=$result2->fetch_assoc()){
           $name2 = $row2['name'];
-          $mobile2 = $row2['mobile'];
+          $mobile2 = $row2['contact'];
+          $address = $row2['address'];
         }
       }
 
@@ -732,39 +753,17 @@ if ($result->num_rows > 0) {
       <h5 class="card-title">Email: <span><?php echo $email2; ?></span></h5>
       <h5 class="card-title">Mobile No:<span><?php echo $mobile2; ?></span></h5>
       <h5 class="card-title">Price:<span><?php echo $price; ?></span></h5>
-      <?php 
-        $add = "SELECT * FROM position WHERE email='$email2'";
-        $res = $conn->query($add);
-        if($res->num_rows>0){
-          while($r = $res->fetch_assoc()){
-            $address = $r['address'];
-          }
-        }
-      ?>
-      <h5 class="card-title">Location: <span><?php echo $address ?></span></h5>
+      <h5 class="card-title">Location: <span><?php echo $address; ?></span></h5>
+      <h5 class="card-title">Time of Arrival: <span><?php echo $row['arrtime']; ?></span></h5>
       <!-- <h5 class="card-title">Distance: <span>2 km</span></h5> -->
-      <h5 class="card-title">Service Chosen: 
-      <span>
-      <?php $ser = explode(",",$row['services']); 
-        foreach($ser as $s){
-            if($s!=" "){
-      ?>  
-      
-      <h6><li><?php echo $s; ?></li></h6>
-          <?php }} ?>
-      </span>
+      <h5 class="card-title">Room Chosen: <span><?php echo $row['roomName']; ?></span>
 
       </h5>
 
       <?php if(strtoupper($row['status'])=="PENDING"){ ?>
       <form class="arrival-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <div class="arrival">
-         <label>Time to Arrive: </label><br> 
-        <input type="number" name="arrtime" placeholder="Arrival Time in Minutes" required>
-        <input type="number" name="id" id="id" value="<?php echo $row['id']; ?>" hidden>
-        </div>
-      
      <div class="status-btn">
+     <input type="number" name="id" id="id" value="<?php echo $row['id']; ?>" hidden>
       <button class="reject" type="submit" name="reject" value="reject">Reject</button>
       <button class="accept" type="submit" name="accept" value="accept">Accept</button>
     </div>
@@ -772,157 +771,10 @@ if ($result->num_rows > 0) {
       </form>
       <?php } else{ echo $row['status']; }?>
     </div>
-      <?php }} ?>
+      <?php }}else{
+          echo "No Transactions Done Yet";
+      } ?>
   </div>
-</div>
-
-<div id="products" class="tabcontent">
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-  <h2>Add a Product</h2>
-  
-      <label for="productName">Product Name</label>
-      <input type="text" name="productName" id="productName" placeholder="Product Name" required><br>
-
-      <label for="productDescription">Product Description</label>
-      <input type="text" name="productDescription" id="productDescription" placeholder="Product Description" required><br>
-
-      <div class="grid-container">
-
-      <label for="productVehicle">For Vehicle</label>
-
-      <label for="productPrice">Product Price</label>
-
-      <select id="productVehicle" name="productVehicle" class="grid-item" required>
-          <option value="-1">Select Vehicle</option>
-          <option value="Car">Car</option>
-          <option value="Truck">Truck</option>
-          <option value="Bike">Bike</option>
-          <option value="Others/NA">Others/NA</option>
-      </select>
-  
-      <input type="number" name="productPrice" id="productPrice" placeholder="Product Price" required>
-      <br>
-
-      </div>
-     
-      <label for="productImage">Product Image<p class="muted-text">(Kindly Upload an Image file of less than 5000 kb Size)</p></label>
-      <input type="file" name="productImage" id="productImage"><br>
-
-  <center>
-      <input type="submit" value="Add Product" name="addProduct" class="button" />
-  </center>  
-  </form> 
-
-  <div class="showAll">
-<h2>All Products</h2>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Vehicle</th>
-    <th>Price</th>
-    <th>Action</th>
-  </tr>
-  <?php
-
-$sql = "SELECT * FROM product WHERE email='$email'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  while($row = $result->fetch_assoc()) {
-
-    ?>
-<tr>
-    <td><?php echo $row['id']; ?></td>   
-    <td><?php echo $row['productName']; ?></td>   
-    <td><?php echo $row['productDescription']; ?></td>   
-    <td><?php echo $row['productVehicle']; ?></td>   
-    <td><?php echo $row['productPrice']; ?></td>   
-    <td><button style="padding: 5px;" class="edBtn" onclick="document.getElementById('<?php echo 'pe'.$row['id']; ?>').style.display='block'">Edit</button> <button style="padding: 5px;" class="edBtn" onclick="document.getElementById('<?php echo 'pd'.$row['id']; ?>').style.display='block'">Delete</button></td> 
-</tr>
-
-                    <!-- Edit Modal -->
-                      <div id="<?php echo 'pe'.$row['id']; ?>" class="modal">
-                        <div class="modal-content">
-
-                          <span class="closeEdit" onclick="document.getElementById('<?php echo 'pe'.$row['id']; ?>').style.display='none'">&times;</span>
-
-                          <form action="editProduct.php?id=<?php echo $row['id']; ?>" method="POST" style="margin-bottom: 10px; margin-top: -30px; background:none;">
-                            <h3 class="heading">Edit Product</h3>
-                            <center><hr>
-
-                              <label for="productNameEdit" class="modal-label">Product Name: </label>
-                              <input type="text" name="productNameEdit" id="productNameEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['productName']; ?>"><br><br>
-                              
-                              <label for="productDescriptionEdit" class="modal-label">Product Description: </label>
-                              <input type="text" name="productDescriptionEdit" id="productDescriptionEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['productDescription']; ?>"><br><br>
-
-                              <select id="productVehicleEdit" name="productVehicleEdit" class="grid-item" required>
-                                  <?php $v = $row['productVehicle']; ?>
-                                <option value="Car" <?php if($v=="Car"){echo "selected";} ?> >Car</option>
-                                <option value="Truck" <?php if($v=="Truck"){echo "selected";} ?> >Truck</option>
-                                <option value="Bike" <?php if($v=="Bike"){echo "selected";} ?> >Bike</option>
-                                <option value="Others/NA" <?php if($v=="Others/NA"){echo "selected";} ?> >Others/NA</option>
-                              </select>
-
-                              <label for="productPriceEdit" class="modal-label">Product Price: </label>
-                              <input type="number" name="productPriceEdit" id="productPriceEdit" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['productPrice']; ?>"><br><br>
-                              
-                              <input type="submit" value="Edit Product" name="editProduct" class="button">
-                              
-                            </center>
-                            </form>
-
-                        </div>
-                      </div>
-
-                      <!-- Delete Modal -->
-                      <div id="<?php echo 'pd'.$row['id']; ?>" class="modal">
-                        <div class="modal-content">
-
-                          <span class="closeDelete" onclick="document.getElementById('<?php echo 'pd'.$row['id']; ?>').style.display='none'">&times;</span>
-
-                          <form action="deleteProduct.php?id=<?php echo $row['id']; ?>" method="POST" style="margin-bottom: 10px; margin-top: -30px; background:none;">
-                            <h3 class="heading">Delete Product</h3>
-                            <center><hr>
-
-                              <label for="productNameDelete" class="modal-label">Product Name: </label>
-                              <input type="text" name="productNameDelete" id="productNameDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['productName']; ?>" disabled><br><br>
-                              
-                              <label for="productDescriptionDelete" class="modal-label">Product Description: </label>
-                              <input type="text" name="productDescriptionDelete" id="productDescriptionDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['productDescription']; ?>" disabled><br><br>
-
-                              <select id="productVehicleDelete" name="productVehicleDelete" class="grid-item" required disabled>
-                                  <?php $v = $row['productVehicle']; ?>
-                                <option value="Car" <?php if($v=="Car"){echo "selected";} ?> >Car</option>
-                                <option value="Truck" <?php if($v=="Truck"){echo "selected";} ?> >Truck</option>
-                                <option value="Bike" <?php if($v=="Bike"){echo "selected";} ?> >Bike</option>
-                                <option value="Others/NA" <?php if($v=="Others/NA"){echo "selected";} ?> >Others/NA</option>
-                              </select>
-
-                              <label for="productPriceDelete" class="modal-label">Product Price: </label>
-                              <input type="number" name="productPriceDelete" id="productPriceDelete" class="modal-input" style="width: 60%; margin-bottom: 10px; margin-left: 10px;" value="<?php echo $row['productPrice']; ?>" disabled><br><br>
-                              
-                              <input type="submit" value="Delete Product" name="deleteProduct" class="button">
-                              
-                            </center>
-                            </form>
-
-
-                        </div>
-                      </div>	
-  
-<?php }
-} else {
-  echo "<tr><td colspan='6' style='text-align: center;'>No Products Have Been Added Yet</td></tr>";
-}
-  ?>
-</table>
-
-</div>
-
-
 </div>
 
 <div id="reviews" class="tabcontent">
@@ -965,7 +817,7 @@ if ($result->num_rows > 0) {
    function sidebar(){
     var sidebars = document.getElementsByClassName("tab")[0];
     var maincontent = document.getElementsByClassName("tabcontent");
-    if (sidebars.style.margin >=0){
+    if (sidebars.style.margin=="0px"){
     sidebars.style.margin = "-290px";
     
      for (i = 0; i < maincontent.length; i++) {

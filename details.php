@@ -13,6 +13,9 @@ if(isset($_POST['addDetails'])){
   $type = $_POST['type'];
   $description = $_POST['description'];
   $address = $_POST['address'];
+  $startTime = $_POST['startTime'];
+  $endTime = $_POST['endTime'];
+  $time = $startTime . " - " . $endTime;
 
   $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["serviceImage"]["name"]);
@@ -81,7 +84,7 @@ if(isset($_POST['addDetails'])){
       $latitude = $resultData["data"]["0"]["latitude"];
       $longitude = $resultData["data"]["0"]["longitude"];
 
-      $sql = "UPDATE service SET address='$address', latitude='$latitude', longitude='$longitude', description='$description', image='$image', type='$type' WHERE email='$email'";
+      $sql = "UPDATE service SET address='$address', latitude='$latitude', longitude='$longitude', description='$description', image='$image', type='$type', time='$time' WHERE email='$email'";
       if($conn->query($sql)===TRUE){
         header('Location: admin.php');
         exit;
@@ -225,7 +228,7 @@ if(isset($_POST['addDetails'])){
   }
 
   .fit-image{
-  width: 100%;
+  width: 95%;
   object-fit: cover;
   height: auto; /* only if you want fixed height */
   }
@@ -293,7 +296,7 @@ if(isset($_POST['addDetails'])){
 
   @media (max-width: 500px) {
     .form-control{
-    width: 260px;
+    width: 100%;
     height: 35px;
     background-color: #ffffff;
     font-size: 12px;
@@ -326,7 +329,7 @@ if(isset($_POST['addDetails'])){
   }
 
   .selectdiv select{
-    width: 260px;
+    width: 100%;
     height: 35px;
     font-size: 12px;
     font-weight: 500;
@@ -398,28 +401,28 @@ if(isset($_POST['addDetails'])){
                 <label for="exampleFormControlTextarea1">Address</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" name="address" placeholder="Complete Address of your Service..." rows="3" required></textarea>
               </div>
-             
-             <div class="form-group">
-               <label for="exampleFormControlTextarea1">Upload Image</label><br>
-               <span class="error"><?php echo $pErr; ?></span>
-              <input type="file"  name="serviceImage" id="customFile" required>
-              <label class="custom-file-label" for="customFile">Choose file</label>
-             </div>
+
 
             <div class="form-group ">
               
               <div class="row m-0">
               <div class="col-6 p-0">
                 <label for="exampleFormControlTextarea1">Start Time</label>
-                <input class="form-control-new" type="time" value="13:45:00" id="example-time-input">
+                <input class="form-control-new" type="time" name="startTime" value="11:00" id="example-time-input" required>
               </div>
               <div class="col-6 p-0">
                 <label for="exampleFormControlTextarea1" class="end-time">End Time</label><br>
-                <input class="form-control-new float-right"  type="time" value="13:45:00" id="example-time-input">
+                <input class="form-control-new float-right"  type="time" name="endTime" value="23:00" id="example-time-input" required>
               </div>
               </div>
             </div>
 
+            <div class="form-group">
+               <label for="exampleFormControlTextarea1">Upload Image</label><br>
+               <span class="error"><?php echo $pErr; ?></span>
+              <input type="file"  name="serviceImage" id="customFile" required>
+              <label class="custom-file-label" for="customFile">Choose file</label>
+             </div>
 
               <br>
               <div class=" form-group d-flex justify-content-center" id="btn">
