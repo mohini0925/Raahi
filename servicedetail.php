@@ -4,52 +4,55 @@ if(!isset($_SESSION['email'])){
   header('Location: login.php');
   exit;
 }
-$name = $email = $mobile = "";
+$userEmail = $_SESSION['email'];
+$name = $email = $mobile = $image = $description = $time = $type = $address = "";
 if(isset($_GET['id'])){
   $id = $_GET['id'];
   $_SESSION['SCID'] = $id;
 }else{
   $id = $_SESSION['SCID'];
 }
-  $sql = "SELECT * FROM serviceCenter WHERE id='$id'";
+  $sql = "SELECT * FROM service WHERE id='$id'";
   $result = $conn->query($sql);
   if($result->num_rows == 1){
     while($row=$result->fetch_assoc()){
       $name = $row['name'];
       $email = $row['email'];
-      $mobile = $row['mobile'];
+      $mobile = $row['contact'];
+      $image = $row['image'];
+      $description = $row['description'];
+      $time = $row['time'];
+      $type = $row['type'];
+      $address = $row['address'];
     }
   }
-$serviceList = "";
-$total = 0;
+$roomName = "";
+$roomPrice = 0;
 $userEmail = $_SESSION['email'];
-  if(isset($_POST['hire'])){
-    $service = $_POST['service'];
-    $t = count($service);
-    // for($i=0; $i<$t; $i++){
-    //     echo "<br>$service[$i]";
-    // }
-    $sql = 'SELECT * FROM services WHERE id IN (' . implode(',', $service) . ')';
+  if(isset($_POST['book'])){
+    $roomID = $_POST['room'];
+    $arrivalTime = $_POST['arrivalTime'];
+    $sql = "SELECT * FROM rooms WHERE id='$roomID' ";
     $result = $conn->query($sql);
     if($result->num_rows > 0){
         while($row=$result->fetch_assoc()){
-            $serviceList .= $row['serviceName'].", ";
-            $total = $total + $row['servicePrice'];
+            $roomName = $row['roomName'].", ";
+            $roomPrice = $row['roomPrice'];
         }
-        $trans = "INSERT INTO transaction (pemail, scemail, services, price, status, arrtime) VALUES ('$userEmail', '$email', '$serviceList', '$total', 'pending', '0')";
+        $trans = "INSERT INTO transactions (pemail, scemail, roomName, roomPrice, status, arrtime) VALUES ('$userEmail', '$email', '$roomName', '$roomPrice', 'PENDING', '$arrivalTime')";
         if($conn->query($trans)===TRUE){
-          $subject = "New Service Request";
-          $body = "Hello $name! A passenger has requested for some of your services. Kindly head to DemandKar to Accept or Reject the Same.";
+          $subject = "New Room Booking Request";
+          $body = "Hello $name! A traveller has requested to Book a Room at Your Accomodation. Kindly head to Raahi to Accept or Reject the Request.";
           $headers = "From: marujay0203@gmail.com";
           if(mail($email, $subject, $body, $header)){
-            header('Location: orderhistory.php');
+            header('Location: orderdetail.php');
           }
           else{
-            echo "Could Not Book Services";
+            echo "Could Not Book Room";
           }
         }
         else{
-          echo "Could Not Book Services";
+          echo "Could Not Book Room";
         }
 
     }
@@ -91,7 +94,7 @@ $userEmail = $_SESSION['email'];
     <link rel="stylesheet" href="css/easyzoom.css">
 
 
-    <title>Service Detail Page</title>
+    <title><?php echo $name; ?></title>
 
 </head>
 <body>
@@ -141,7 +144,7 @@ $userEmail = $_SESSION['email'];
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 p-0">
-              <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1035&q=80" class="img-responsive fit-image" width="100%">
+              <img src="uploads/<?php echo $image; ?>" class="img-responsive fit-image" width="100%">
             </div>
           </div>
     </div>
@@ -152,54 +155,44 @@ $userEmail = $_SESSION['email'];
             <div class="col-xs-12 col-sm-12 col-md-12 p-3">
 
                        <div class="row product-page-display justify-content-center mt-3" >
-                          <h3 class="service-text text-center"><!-- <?php echo $name; ?> -->Fortis Hospital</h3>
+                          <h3 class="service-text text-center"><?php echo $name; ?></h3>
                          <div class="col-lg-12 service-box">
                                 <div class="row m-0 justify-content-between">
                
-                                   <div class="service-title">Type: <span>Hospital</span></div>
-                                   <!-- <?php
+                                   <div class="service-title">Type: <span><?php echo $type; ?></span></div>
+                                   <?php
                                    $rating = "SELECT AVG(rating) AS ratingAverage FROM review WHERE SCemail='$email'";
                                    $res = $conn->query($rating);
                                    if($res->num_rows==1){
                                      while($Rrow=$res->fetch_assoc()){
-                                  ?> -->
-                                  <div class="service-title  ">Rating: <span><!-- <?php echo substr($Rrow['ratingAverage'], 0, 3); ?> --> 4</span></div>
-                                 <!--   <?php }} ?> -->
+                                  ?>
+                                  <div class="service-title  ">Rating: <span><?php echo substr($Rrow['ratingAverage'], 0, 3); ?></span></div>
+                                   <?php }} ?>
                                  </div>
                                  <div class="row m-0 justify-content-between">
-                                  <div class="service-title">Contact Info: <span><!-- <?php echo $mobile; ?> -->9820361677</span></div>
+                                  <div class="service-title">Contact: <span><?php echo $mobile; ?></span></div>
                                    
-                                  <div class="service-title">Time: <span><!-- <?php echo $mobile; ?> -->7am- 11pm</span></div>
+                                  <div class="service-title">Time: <span><?php echo $time; ?></span></div>
                                   
                                   
                                  </div>
                                  <div class="row m-0 justify-content-between">
                                   
-                                  <!-- <?php $service = "SELECT COUNT(serviceName) AS noServices FROM services WHERE email='$email'";
-                                   $ser = $conn->query($service);
-                                   if($ser->num_rows==1){
-                                     while($Srow=$ser->fetch_assoc()){ ?> -->
-                                   <div class="service-title">Email: <span><!-- <?php echo $Srow['noServices']; ?> -->panchalmohini1@gmail.com</span></div>
-                                   <!-- <?php }} ?>
-
-                                   <?php 
-                                      $add = "SELECT * FROM position WHERE email='$email'";
-                                      $res = $conn->query($add);
-                                      if($res->num_rows>0){
-                                        while($r = $res->fetch_assoc()){
-                                          $address = $r['address'];
-                                        }
-                                      }
-                                    ?> -->
-                                     <div class="service-title">Location: <span  ><!-- <?php echo $address; ?> -->Mulund, Mumbai</span></div>
+                                   <div class="service-title">Email: <span><?php echo $email; ?></span></div>
+                                  
+                                     <div class="service-title">Location: <span  ><?php echo $address; ?></span></div>
                                  </div>        
 
-                                  <div class="service-title">Description: <span style="text-align: justify;">Fortis Healthcare Limited is a chain of private hospitals headquartered in India. Fortis started its health care operations from Mohali where first Fortis hospital was started. Later on, the hospital chain purchased the healthcare branch of Escorts group and increased its strength in various parts of the country. </span></div>
+                                  <div class="service-title">Description: <span style="text-align: justify;"><?php echo $description; ?> </span></div>
                     
                                   </div>
                                 </div>
                               </div>
                        </div>
+
+                       <?php
+                        if($type=="Accomodation"){
+                       ?>
 
                           <div class="row  product-page-display justify-content-center mt-3" >
                           <h3 class="text-center service-text">Book Room</h3>
@@ -216,17 +209,17 @@ $userEmail = $_SESSION['email'];
                               <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                                 <tbody>
                                 <?php 
-                                  $sql = "SELECT * FROM services WHERE email='$email'";
+                                  $sql = "SELECT * FROM rooms WHERE email='$email'";
                                   $result = $conn->query($sql);
                                   if($result->num_rows > 0){
                                     while($row=$result->fetch_assoc()){
                                 ?>
                                   <tr>
                                     <!-- <td scope="row">1</td> -->
-                                    <td><?php echo $row['serviceName']; ?></td>
-                                    <td><?php echo $row['servicePrice']; ?></td>
+                                    <td><?php echo $row['roomName']; ?></td>
+                                    <td><?php echo $row['roomPrice']; ?></td>
                                     <td class="radio">
-                                      <input type="radio" name="service[]" value="<?php echo $row['id']; ?>">
+                                      <input type="radio" name="room" value="<?php echo $row['id']; ?>" required>
                                     </td>
                                   </tr>
                                   <?php }} ?>
@@ -236,43 +229,43 @@ $userEmail = $_SESSION['email'];
 
                               <div class="text-center">
                               <label for="exampleFormControlTextarea1">Arrival Time</label>
-                              <input class="form-control-new" type="time" value="13:45:00" id="example-time-input">
+                              <input class="form-control-new" type="time" name="arrivalTime" value="20:30" id="example-time-input" required>
                               </div>
 
                               <div class="modal-btn text-center">
-                                <button type="submit" name="hire" class="btn buy-btn">Book Room</button>
+                                <button type="submit" name="book" class="btn buy-btn">Book Room</button>
                               </div>
                             </form>
 
                           </div>
                           
-                         </div><br><br>
+                         </div><br><br><?php } ?>
 
                         
                        
                          <h3 class="text-center service-text">Reviews and Rating</h3>
-                  <!--        <?php
+                         <?php
                                       
                               $sql = "SELECT * FROM review WHERE SCemail='$email'";
                               $result = $conn->query($sql);
                               if($result->num_rows>0){
                                 while($row=$result->fetch_assoc()){
                                   
-                                  ?> -->
+                                  ?>
                                     <div class="row product-page-display  mt-3 mb-3">
                                   <div class="media flex-column flex-md-row  comment">
                           <div class="media-body media-body-inset-1" >
-                                        <h6><!-- <?php echo $row['name']; ?> -->Hello</h6><span class="text-gray"></span>
+                                        <h6><?php echo $row['name']; ?></h6><span class="text-gray"></span>
                             <div class="blog-post-time">
-                                          <time datetime="2018-04-24">Rating: <!-- <?php echo substr($row['rating'],0,3); ?> -->/5</time>
+                                          <time datetime="2018-04-24">Rating: <?php echo substr($row['rating'],0,3); ?>/5</time>
                             </div>
-                              <p><!-- <?php echo $row['review']; ?> -->It was a nice hospital</p>
+                              <p><?php echo $row['review']; ?></p>
                             </div>
                           </div>
                         </div>
-                                <!--     <?php }} ?> -->
+                                    <?php }} ?>
                           <div class="row product-page-display justify-content-center mt-3 mb-3">
-                            <form class="comment-form-area" >
+                            <form class="comment-form-area" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                               <p class="comment-form-comment">
                                   <label>Your review *</label>
                                   <textarea class="comment-notes" name="review" required="required"></textarea>
@@ -289,7 +282,7 @@ $userEmail = $_SESSION['email'];
                               </div>
                           </form>
 
-                        <!--   <?php
+                          <?php
                           
                               if(isset($_POST['reviewSubmit'])){
                                 $rating = $_POST['rating'];
@@ -297,7 +290,7 @@ $userEmail = $_SESSION['email'];
                                 $userEmail = $_SESSION['email'];
                                 $SCemail = $email;
 
-                                $sql1 = "SELECT * FROM passenger WHERE email='$userEmail'";
+                                $sql1 = "SELECT * FROM user WHERE email='$userEmail'";
                                 $result1 = $conn->query($sql1);
                                 if($result1->num_rows > 0){
                                   while($row1 = $result1->fetch_assoc()){
@@ -314,7 +307,7 @@ $userEmail = $_SESSION['email'];
 
                               }
                           
-                          ?> -->
+                          ?>
                           </div>
                          </div>
             </div>

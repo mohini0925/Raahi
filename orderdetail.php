@@ -1,3 +1,23 @@
+<?php
+
+require('config.php');
+if(!isset($_SESSION['email'])){
+  header('Location: login.php');
+  exit;
+}
+$email = $_SESSION['email'];
+$sql = "SELECT * FROM user WHERE email='$email'";
+$result = $conn->query($sql);
+if($result->num_rows == 1){
+  while($row=$result->fetch_assoc()){
+    $name = $row['name'];
+    $mobile = $row['contact'];
+    $address = $row['address'];
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +65,7 @@
 
     <div>
     <nav class="navbar navbar-expand-md bg-dark fixed-nav main-nav">
-        <span href="#" class="navbar-brand"><img src="images/logo.png" height="50px" ></span>
+        <span href="home.php" class="navbar-brand"><img src="images/logo.png" height="50px" ></span>
 
         <button type="button" id="ChangeToggle" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <div id="navbar-hamburger"><i class="fa fa-bars"></i></div>
@@ -57,18 +77,18 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
 
             <div class="navbar-nav ml-auto">
-                <a href="index.html" class="nav-item nav-link active">Amusement</a>
-                <a href="#" class="nav-item nav-link">Services</a>
-                <a href="#" class="nav-item nav-link">About Us</a>
+                <a href="amusement.php" class="nav-item nav-link active">Amusement</a>
+                <a href="servicepage.php" class="nav-item nav-link">Services</a>
+                <a href="about.html" class="nav-item nav-link">About Us</a>
              <div class="dropdown show">
               <a class="nav-item nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="images/usernew.png" width="25px">
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">My Profile</a>
-                <a class="dropdown-item" href="#">Booking</a>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="profile.php">My Profile</a>
+                <a class="dropdown-item" href="orderdetail.php">Booking</a>
+                <a class="dropdown-item" href="login.php">Logout</a>
               </div>
             </div>      
             </div>
@@ -84,49 +104,48 @@
                <h3 class="text-center">Order History</h3><br><br>
                         <div class="row m-0 product-page-display justify-content-center" >
                                 <!-- Single Product Item Start -->
-                             <!--   <?php 
+                               <?php 
                                
-                               $sql = "SELECT * FROM transaction WHERE pemail='$email' ORDER BY status DESC";
+                               $sql = "SELECT * FROM transactions WHERE pemail='$email' ORDER BY status DESC";
                                $result = $conn->query($sql);
                                if($result->num_rows>0){
                                  while($row=$result->fetch_assoc()){
 
-                               ?> -->
+                               ?>
                               <div class="card">
                                   <div class="card-body">
-                                    <!-- <?php
-                                    $scEmail = $row['scemail'];
-                                    $sql2 = "SELECT * FROM serviceCenter WHERE email='$scEmail'";
-                                    $result2 = $conn->query($sql2);
-                                    if($result2->num_rows>0){
-                                      while($row2 = $result2->fetch_assoc()){
-                                    ?> -->
+                                    <?php
+                                      $scEmail = $row['scemail'];
+                                      $sql2 = "SELECT * FROM service WHERE email='$scEmail'";
+                                      $result2 = $conn->query($sql2);
+                                      if($result2->num_rows>0){
+                                        while($row2 = $result2->fetch_assoc()){
+                                    ?>
                                     <h4 class="text-align-center card-title"> Service Provider Details</h4><br>
-                                    <h5 class="card-title">Name: <span><!-- <?php $name2 = $row2['name']; echo $name2; ?> --></span></h5>
-                                    <h5 class="card-title">Email: <span><!-- <?php $email2 = $row2['email']; echo $email2; ?> --></span></h5>
-                                    <h5 class="card-title">Location: <span><!-- <?php $email2 = $row2['email']; echo $email2; ?> --></span></h5>
-                                    <h5 class="card-title">Mobile No.: <span><!-- <?php $mobile2 = $row2['mobile']; echo $mobile2; }} ?> --></span></h5>
+                                    <h5 class="card-title">Name: <span><?php $name2 = $row2['name']; echo $name2; ?></span></h5>
+                                    <h5 class="card-title">Email: <span><?php $email2 = $row2['email']; echo $email2; ?></span></h5>
+                                    <h5 class="card-title">Location: <span><?php $address2 = $row2['address']; echo $address2; ?></span></h5>
+                                    <h5 class="card-title">Mobile No.: <span><?php $mobile2 = $row2['contact']; echo $mobile2; }} ?></span></h5>
                                     <h5 class="card-title">Room Chosen: <span>
-                                   <!--  <?php $ser = explode(",",$row['services']); 
-                                      foreach($ser as $s){
-                                          if($s!=" "){
-                                    ?>   --></span></h5>
+                                    <?php $roomName = $row['roomName'];
+                                    echo $roomName;
+                                    ?>  </span></h5>
                                     
                                   
                                    <div class="d-flex justify-content-between">
-                                    <div class="card-price">Rs. <!-- <?php echo $row['price']; $price = $row['price']; ?> --></div>
-                                    <div class="status"><!-- <?php $status = strtoupper($row['status']);
-                                    echo $status; ?> -->Accepted</div>
+                                    <div class="card-price">Rs. <?php echo $row['roomPrice']; $roomPrice = $row['roomPrice']; ?></div>
+                                    <div class="status"><?php $status = strtoupper($row['status']);
+                                    echo $status; ?></div>
                                    </div>
-                                    <!-- <?php if($status=="ACCEPTED"){ ?> -->
+                                    <?php if($status=="ACCEPTED"){ ?>
                                  
                                     <a href="#" class="btn buy-btn" style="margin-top: 10px;" data-toggle="modal" data-target="#exampleModalCenter">View Receipt</a>
                                  
-                               <!--    <?php } ?> -->
+                                  <?php } ?>
 
                                   </div>
                                </div>
-                            <!--    <?php }} ?> -->
+                               
                                      
                          </div>
 
@@ -152,13 +171,13 @@
         <div class="col-lg-12">
           <div class="row">
         <div class="col-lg-4 col-md-4">
-        <div class="heading text-center">Passenger</div>
+        <div class="heading text-center">User</div>
           <div class="row justify-content-center">
         
             <div class="modal-box">
-              <div class="service-title">Name: <span><!-- <?php echo $name; ?> --></span></div>
-              <div class="service-title">Contact Info: <span><!-- <?php echo $mobile; ?> --></span></div>
-              <div class="service-title ">Email: <span><!-- <?php echo $email; ?> --></span></div> 
+              <div class="service-title">Name: <span><?php echo $name; ?></span></div>
+              <div class="service-title">Contact Info: <span><?php echo $mobile; ?></span></div>
+              <div class="service-title ">Email: <span><?php echo $email; ?></span></div> 
             </div>
 
           </div>
@@ -168,22 +187,22 @@
           <div class="row justify-content-center">
         
             <div class="modal-box">
-              <div class="service-title">Room Chosen: <span><!-- <?php echo $name; ?> --></span></div>
-              <div class="service-title">Price: Rs. <!-- <?php echo $price; ?> --><span></span></div>
-              <div class="service-title">Arrivial time: <span><?php echo $arrtime." Minutes"; ?></span></div>
+              <div class="service-title">Room Chosen: <span><?php echo $roomName; ?></span></div>
+              <div class="service-title">Price: Rs. <?php echo $roomPrice; ?><span></span></div>
+              <div class="service-title">Arrivial time: <span><?php echo $row['arrtime']; ?></span></div>
             </div>
 
           </div>
         </div>
         <div class="col-lg-4 col-md-4">
-          <div class="heading text-center">Service Provider</div>
+          <div class="heading text-center">Accomodation</div>
           <div class="row justify-content-center">
             
             <div class="modal-box">
-            <div class="service-title ">Service Provider Name: <span><?php echo $name2; ?></span></div>
+            <div class="service-title ">Accomodation Name: <span><?php echo $name2; ?></span></div>
             <div class="service-title">Contact Info: <span><?php echo $mobile2; ?></span></div>
             <div class="service-title ">Email: <span><?php echo $email2; ?></span></div> 
-            <div class="service-title ">Location: <span>2 km</span></div>
+            <div class="service-title ">Location: <span><?php echo $address2; ?></span></div>
             
           </div>
         </div>
@@ -192,7 +211,7 @@
       </div>
       <div class="modal-footer modal-footer-full-width ">
         <button type="button" class="btn btn-secondary" onclick="window.print()">Print</button>
-        <a href="paymentpage.php?price=<?php echo $row['price']; ?>"><button type="button" class="btn buy-btn">Checkout</button></a>
+        <a href="paymentpage.php?price=<?php echo $row['roomPrice']; ?>"><button type="button" class="btn buy-btn">Checkout</button></a>
       </div>
     </div>
   </div>
@@ -200,6 +219,9 @@
 
 
 </div>
+
+<?php }} ?>
+
 </div>
 
     <!-- Jquery -->
