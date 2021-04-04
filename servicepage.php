@@ -197,7 +197,7 @@ asort($ratingArray);
                                 if(isset($_GET['sort'])){
                                   if($_GET['sort']=="distance"){
                                     foreach($distanceArray as $e => $dist){
-                                      if($dist<15){
+                                      if($dist<20){
                                         $abc = "SELECT * FROM service WHERE email='$e'";
                                         $res = $conn->query($abc);
                                         if($res->num_rows==1){
@@ -238,7 +238,7 @@ asort($ratingArray);
                                   }
                                   else if($_GET['sort']=="rating"){
                                     foreach($ratingArray as $e => $rating){
-                                      if($dist<15){
+                                      if($dist<20){
                                         $abc = "SELECT * FROM service WHERE email='$e'";
                                         $res = $conn->query($abc);
                                         if($res->num_rows==1){
@@ -285,7 +285,7 @@ asort($ratingArray);
                                   if($result->num_rows > 0){
                                     while($row=$result->fetch_assoc()){
                                       $e = $row['email'];
-                                      if($distanceArray[$e]<15){
+                                      if($distanceArray[$e]<20){
                                       ?>
 
                                           <div class="card">
@@ -332,7 +332,7 @@ asort($ratingArray);
                                   if($result->num_rows > 0){
                                     while($row=$result->fetch_assoc()){
                                       $e = $row['email'];
-                                      if($distanceArray[$e]<15){
+                                      if($distanceArray[$e]<20){
                                       ?>
 
                                           <div class="card">

@@ -164,7 +164,7 @@ if(isset($_POST['getlatlong'])){
       <div class="sub-text"> A list of accomodations of all types, suiting all budget is specially curated for you based on your location.</div>
       <div class="link-button">
         
-          <button class="hire-mech">Explore</button>
+          <a href="servicepage.php?filter=Accomodation"><button class="hire-mech">Explore</button></a>
         </div>
        </div>
       </div>
@@ -189,7 +189,7 @@ if(isset($_POST['getlatlong'])){
       <div class="sub-text">Here we give list of diffrent refereshment places to find Food , Beverages and Washroom facility while you travel by road.</div>
       <div class="link-button">
         
-          <button class="hire-mech">Explore</button>
+          <a href="servicepage.php?filter=Refreshment"><button class="hire-mech">Explore</button></a>
           
         </div>
        </div>
@@ -210,7 +210,7 @@ if(isset($_POST['getlatlong'])){
       <div class="sub-text">At the time of any emergency, we provide you location of different hospitals around you.</div>
       <div class="link-button">
         
-          <button class="hire-mech">Explore</button>
+          <a href="servicepage.php?filter=Hospital"><button class="hire-mech">Explore</button></a>
         </div>
        </div>
       </div>
@@ -235,7 +235,7 @@ if(isset($_POST['getlatlong'])){
       <div class="sub-text">Here we give list of diffrent service center and mechanic to get to you in this type of situation.Also find nearby petrol pump. Contact or email them so they can reach to you.</div>
       <div class="link-button">
         
-          <button class="hire-mech">Explore</button>
+          <a href="servicepage.php?filter=Garage"><button class="hire-mech">Explore</button></a>
           
         </div>
        </div>
