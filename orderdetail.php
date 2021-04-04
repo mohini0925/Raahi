@@ -102,59 +102,53 @@ if($result->num_rows == 1){
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 p-3">
                <h3 class="text-center">Order History</h3><br><br>
-                        <div class="row m-0 product-page-display justify-content-center" >
-                                <!-- Single Product Item Start -->
-                               <?php 
+                  <div class="row m-0 product-page-display justify-content-center" >
+                          <!-- Single Product Item Start -->
+                          <?php 
+                          
+                          $sql = "SELECT * FROM transactions WHERE pemail='$email' ORDER BY status ASC";
+                          $result = $conn->query($sql);
+                          if($result->num_rows>0){
+                            while($row=$result->fetch_assoc()){
+
+                          ?>
+                        <div class="card">
+                            <div class="card-body">
+                              <?php
+                                $scEmail = $row['scemail'];
+                                $sql2 = "SELECT * FROM service WHERE email='$scEmail'";
+                                $result2 = $conn->query($sql2);
+                                if($result2->num_rows>0){
+                                  while($row2 = $result2->fetch_assoc()){
+                              ?>
+                              <h4 class="text-align-center card-title"> Service Provider Details</h4><br>
+                              <h5 class="card-title">Name: <span><?php $name2 = $row2['name']; echo $name2; ?></span></h5>
+                              <h5 class="card-title">Email: <span><?php $email2 = $row2['email']; echo $email2; ?></span></h5>
+                              <h5 class="card-title">Location: <span><?php $address2 = $row2['address']; echo $address2; ?></span></h5>
+                              <h5 class="card-title">Mobile No.: <span><?php $mobile2 = $row2['contact']; echo $mobile2; }} ?></span></h5>
+                              <h5 class="card-title">Room Chosen: <span>
+                              <?php $roomName = $row['roomName'];
+                              echo $roomName;
+                              ?>  </span></h5>
+                              
+                            
+                              <div class="d-flex justify-content-between">
+                              <div class="card-price">Rs. <?php echo $row['roomPrice']; $roomPrice = $row['roomPrice']; ?></div>
+                              <div class="status"><?php $status = strtoupper($row['status']);
+                              echo $status; ?></div>
+                              </div>
+                              <?php if($status=="ACCEPTED"){ ?>
+                            
+                              <a href="#" class="btn buy-btn" style="margin-top: 10px;" data-toggle="modal" data-target="#exampleModalCenter">View Receipt</a>
+                            
+                            <?php } ?>
+
+                            </div>
+                          </div>
                                
-                               $sql = "SELECT * FROM transactions WHERE pemail='$email' ORDER BY status DESC";
-                               $result = $conn->query($sql);
-                               if($result->num_rows>0){
-                                 while($row=$result->fetch_assoc()){
-
-                               ?>
-                              <div class="card">
-                                  <div class="card-body">
-                                    <?php
-                                      $scEmail = $row['scemail'];
-                                      $sql2 = "SELECT * FROM service WHERE email='$scEmail'";
-                                      $result2 = $conn->query($sql2);
-                                      if($result2->num_rows>0){
-                                        while($row2 = $result2->fetch_assoc()){
-                                    ?>
-                                    <h4 class="text-align-center card-title"> Service Provider Details</h4><br>
-                                    <h5 class="card-title">Name: <span><?php $name2 = $row2['name']; echo $name2; ?></span></h5>
-                                    <h5 class="card-title">Email: <span><?php $email2 = $row2['email']; echo $email2; ?></span></h5>
-                                    <h5 class="card-title">Location: <span><?php $address2 = $row2['address']; echo $address2; ?></span></h5>
-                                    <h5 class="card-title">Mobile No.: <span><?php $mobile2 = $row2['contact']; echo $mobile2; }} ?></span></h5>
-                                    <h5 class="card-title">Room Chosen: <span>
-                                    <?php $roomName = $row['roomName'];
-                                    echo $roomName;
-                                    ?>  </span></h5>
-                                    
-                                  
-                                   <div class="d-flex justify-content-between">
-                                    <div class="card-price">Rs. <?php echo $row['roomPrice']; $roomPrice = $row['roomPrice']; ?></div>
-                                    <div class="status"><?php $status = strtoupper($row['status']);
-                                    echo $status; ?></div>
-                                   </div>
-                                    <?php if($status=="ACCEPTED"){ ?>
-                                 
-                                    <a href="#" class="btn buy-btn" style="margin-top: 10px;" data-toggle="modal" data-target="#exampleModalCenter">View Receipt</a>
-                                 
-                                  <?php } ?>
-
-                                  </div>
-                               </div>
-                               
-                                     
-                         </div>
-
             </div>
 
-        </div>
-
-
-    </div>
+        
 
 
 <!-- Modal -->
@@ -221,6 +215,12 @@ if($result->num_rows == 1){
 </div>
 
 <?php }} ?>
+
+</div>
+
+
+    </div>
+</div>
 
 </div>
 

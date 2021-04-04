@@ -1,20 +1,6 @@
 <?php
 
 require('config.php');
-if(!isset($_SESSION['email'])){
-  header('Location: login.php');
-  exit;
-}
-$email = $_SESSION['email'];
-$sql = "SELECT * FROM user WHERE email='$email'";
-$result = $conn->query($sql);
-if($result->num_rows == 1){
-  while($row=$result->fetch_assoc()){
-    $name = $row['name'];
-    $mobile = $row['contact'];
-    $address = $row['address'];
-  }
-}
 
 ?>
 

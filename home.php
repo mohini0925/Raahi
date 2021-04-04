@@ -98,7 +98,7 @@ if(isset($_POST['getlatlong'])){
 
     <div>
     <nav class="navbar navbar-expand-md bg-dark fixed-nav main-nav">
-        <span href="#" class="navbar-brand"><img src="images/logo.png" height="50px" ></span>
+        <span href="home.php" class="navbar-brand"><img src="images/logo.png" height="50px" ></span>
 
         <button type="button" id="ChangeToggle" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <div id="navbar-hamburger"><i class="fa fa-bars"></i></div>
@@ -110,17 +110,17 @@ if(isset($_POST['getlatlong'])){
         <div class="collapse navbar-collapse" id="navbarCollapse">
 
             <div class="navbar-nav ml-auto">
-                <a href="index.html" class="nav-item nav-link active">Amusement</a>
-                <a href="#" class="nav-item nav-link">Services</a>
-                <a href="#" class="nav-item nav-link">About Us</a>
+                <a href="amusement.php" class="nav-item nav-link active">Amusement</a>
+                <a href="servicepage.php" class="nav-item nav-link">Services</a>
+                <a href="about.html" class="nav-item nav-link">About Us</a>
              <div class="dropdown show">
               <a class="nav-item nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="images/usernew.png" width="25px">
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">My Profile</a>
-                <a class="dropdown-item" href="#">Booking</a>
+                <a class="dropdown-item" href="profile.php">My Profile</a>
+                <a class="dropdown-item" href="orderdetail.php">Booking</a>
                 <a class="dropdown-item" href="login.php">Logout</a>
               </div>
             </div>      
