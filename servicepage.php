@@ -159,7 +159,39 @@ asort($ratingArray);
                         </div><br><br>
 
                         <div class="row  m-0 product-page-display justify-content-center" >
-                                <!-- Single Product Item Start -->
+                                <!-- Single Service Item Start -->
+
+                                <!-- PROMOTED SERVICE -->
+
+                                <div class="card">
+                                  <div class="fix-image">
+                                    <img src="https://content.jdmagicbox.com/comp/hissar/p1/9999p1662.1662.130607150009.z4p1/catalogue/family-inn-hissar-018wsm6h1e.jpg" class="card-img-top" alt="...">
+                                  </div> 
+                                  <div class="card-body">
+                                    <h5 class="card-title">Family Inn Restaurant <i style="float: right;" class="muted">Ad</i></h5>
+                                    <h6 class="card-type">Refreshment</h6>
+
+                                    <div class="row m-0 pb-3">                                    
+                                      <div class="card-details "><i class="fa fa-map-marker" style="color: red;" aria-hidden="true"></i>
+                                        <span>3.7 Km</span>
+                                      </div>
+
+                                      <div class="card-details ml-auto"><i class="fa fa-star" style="color: yellow;" aria-hidden="true"></i> <span>4.6</span></div>
+                                    </div>
+
+                                    <div class="card-time float-left">
+                                      <i class="fa fa-clock-o" aria-hidden="true"></i><span>11:00 - 01:00</span>
+                                    </div>
+
+                                    <div class="modal-btn">
+                                      <a href="#" class="btn buy-btn">View Details</a>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+
+
                               <?php
 
                                 if(isset($_GET['sort'])){
