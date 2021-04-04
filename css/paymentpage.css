@@ -1,0 +1,291 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+.fit-image{
+width: 100%;
+object-fit: cover;
+height: auto; /* only if you want fixed height */
+}
+
+#payment-form{
+    margin: 3% 10% 0% 10%; 
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
+    color: hsla(0,0%,10%,.9);
+     
+  }
+
+  .card-holder{
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
+    color: hsla(0,0%,10%,.9);
+    padding-top:2%; 
+    position: relative;
+  }
+
+  .card-number,.address,.email{
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
+    color: hsla(0,0%,10%,.9);
+  }
+
+  .icon{
+    color: #bababf;
+    min-width: 25px;
+  }
+
+   #card-number ,#card-holder ,#cvv,#month,#city,#address,#state,#email,#zip,#phone{
+    padding: 8px 12px;
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 0;
+    box-shadow: 0 0 0 1px #e0e0e0, 0 2px 4px 0 rgba(0,0,0,.07), 0 1px 1.5px 0 rgba(0,0,0,.05);
+    transition: box-shadow .08s ease-in,color .08s ease-in; 
+   
+  }
+  .card-number input{
+    padding: 8px 12px;
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 0;
+    box-shadow: 0 0 0 1px #e0e0e0, 0 2px 4px 0 rgba(0,0,0,.07), 0 1px 1.5px 0 rgba(0,0,0,.05);
+    transition: box-shadow .08s ease-in,color .08s ease-in;
+
+  }
+
+
+  #card-holder{
+    background-image:url("https://img.icons8.com/material/30/000000/person-male.png");
+     background-repeat:no-repeat;
+     background-position:8px;
+     padding-left:40px;
+  }
+  .cvv input{
+     background-image:url("https://img.icons8.com/dotty/30/000000/card-verification-value.png");
+     background-repeat:no-repeat;
+     background-position:right;
+ 
+  }
+
+  #month:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #card-holder:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #card-number:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #cvv:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #address:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #email:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #city:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #state:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #zip:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  #phone:hover{
+    box-shadow: 0 0 3px #515151;
+  }
+  .month,.city,.zip input{
+    width: 90%;
+  }
+
+  .cvv,.state,.phone input{
+    width: 100%;
+  }
+
+  .divide{
+    display: flex;
+    
+  }
+
+  .month,.city,.zip{
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
+    color: hsla(0,0%,10%,.9);
+    padding-top:2%;
+    flex: 1;
+
+  }
+
+  .cvv,.state,.phone{
+    font-size: 16px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
+    color: hsla(0,0%,10%,.9);
+    padding-top:2%; 
+    padding-left:3%;
+    flex: 1;
+  }
+
+  .button1{
+    margin-top: 4%;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius:5px;
+    background-color: #e34922;
+    padding:8px;
+  }
+
+  .button1:hover {
+  box-shadow: 0 0 3px #515151;
+  background-color: #d42619;
+  
+}
+
+  .info{
+    color: #bababf;
+    font-size:13px;
+    padding-left:20%; 
+
+  }
+
+  .option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  border-radius: 50%;
+  top:4px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #228ef2;
+}
+.option-input:checked::before {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 15px;
+  text-align: center;
+  line-height: 20px;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+.payment-title{
+  font-size: 20px;
+  font-weight: 600;
+  color: #302f2f;
+}
+
+.card{
+  width: 500px;
+}
+
+.card-header {
+    padding: 8px 12px;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.payment-box{
+  width: 500px;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 10px;
+display: block;
+margin: 20px 0;
+}
+
+.service-title{
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.service-price{
+  font-size: 20px;
+  font-weight: 400;
+  color: #525252;
+}
+
+input button:focus{
+ outline: none!important;
+
+}
+
+@media only screen and (max-width: 500px){
+
+.card{
+  width: 300px;
+}
+
+#payment-form {
+    margin: 0;
+}
+
+.payment-box{
+  margin: 10px 0; 
+width: 300px;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 10px;
+display: block;
+}
+
+}
